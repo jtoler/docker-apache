@@ -53,5 +53,11 @@ ADD ports_default /etc/apache2/ports.conf
 EXPOSE 80
 EXPOSE 443
 
-# By default, simply start apache.
+# Add generate SSL script
+ADD entrypoint.sh /opt/entrypoint.sh
+RUN chmod a+x /opt/entrypoint.sh
+
+ENTRYPOINT ["/opt/entrypoint.sh"]
+
+# Start apache.
 CMD /usr/sbin/apache2ctl -D FOREGROUND
