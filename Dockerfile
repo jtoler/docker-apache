@@ -45,6 +45,14 @@ RUN sed -i 's/^ServerSignature/#ServerSignature/g' /etc/apache2/conf-enabled/sec
     a2enmod headers; \
     echo "SSLProtocol ALL -SSLv2 -SSLv3" >> /etc/apache2/apache2.conf
 
+# Generate Self Signed SSL
+RUN mkdir -p /etc/apache2/ssl
+RUN openssl req -x509 -newkey rsa:4086 \
+  -subj "/C=XX/ST=XXXX/L=XXXX/O=XXXX/CN=local.lajolla" \
+  -keyout "/etc/apache2/ssl/key.pem" \
+  -out "/etc/apache2/ssl/cert.pem" \
+  -days 3650 -nodes -sha256
+
 # Update the default apache site with the config we created for non-ssl & ssl
 ADD apache_default /etc/apache2/sites-enabled/000-default.conf
 ADD apache_default_ssl /etc/apache2/sites-enabled/000-default-ssl.conf
@@ -52,12 +60,6 @@ ADD ports_default /etc/apache2/ports.conf
 
 EXPOSE 80
 EXPOSE 443
-
-# Add generate SSL script
-ADD generate_ssl.sh /opt/generate_ssl.sh
-RUN chmod a+x /opt/generate_ssl.sh
-
-ENTRYPOINT ["/opt/generate_ssl.sh"]
 
 # Start apache.
 CMD /usr/sbin/apache2ctl -D FOREGROUND
