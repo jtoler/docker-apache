@@ -54,10 +54,10 @@ EXPOSE 80
 EXPOSE 443
 
 # Add generate SSL script
-ADD entrypoint.sh /opt/entrypoint.sh
-RUN chmod a+x /opt/entrypoint.sh
+ADD generate_ssl.sh /opt/generate_ssl.sh
+RUN chmod a+x /opt/generate_ssl.sh
 
-ENTRYPOINT ["/opt/entrypoint.sh"]
+ENTRYPOINT ["/opt/generate_ssl.sh"]
 
 # Start apache.
 CMD /usr/sbin/apache2ctl -D FOREGROUND
