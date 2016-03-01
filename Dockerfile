@@ -1,6 +1,5 @@
 FROM ubuntu:latest
-
-MAINTAINER Dan Pupius <dan@pupi.us>
+MAINTAINER Justin Toler <jwtoler@gmail.com>
 
 # Configure locales
 RUN locale-gen en_US en_US.UTF-8
@@ -12,7 +11,7 @@ RUN apt-get -y upgrade
 
 # Install apache, PHP, and supplimentary programs. curl and lynx-cur are for debugging the container.
 RUN DEBIAN_FRONTEND=noninteractive 
-RUN apt-get -y install apache2 libapache2-mod-php5 php5-mysql php5-ldap php5-gd php-pear php-apc php5-curl php5-xmlrpc php5-intl curl lynx-cur
+RUN apt-get -y install apache2 libapache2-mod-php5 php5-mysql php5-ldap php5-gd php5-xsl php-pear php-apc php5-curl php5-xmlrpc php5-intl curl lynx-cur
 
 # Enable apache mods.
 RUN a2enmod php5
