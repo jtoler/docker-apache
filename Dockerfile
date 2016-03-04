@@ -57,6 +57,11 @@ ADD apache_default /etc/apache2/sites-enabled/000-default.conf
 ADD apache_default_ssl /etc/apache2/sites-enabled/000-default-ssl.conf
 ADD ports_default /etc/apache2/ports.conf
 
+# Install PrinceXML
+RUN wget http://www.princexml.com/download/prince_10r7-1_ubuntu14.04_amd64.deb -O /
+RUN aptitude install gdebi
+RUN gdebi prince_10r7-1_ubuntu14.04_amd64.deb
+
 EXPOSE 80
 EXPOSE 443
 
